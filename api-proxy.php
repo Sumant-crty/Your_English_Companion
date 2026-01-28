@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // IMPORTANT: Replace with your actual Google Gemini API key
 // Get your free key from: https://makersuite.google.com/app/apikey
-$api_key = 'YOUR_GEMINI_API_KEY_HERE';
+$api_key = AIzaSyAJd1slmrkITmafx7CaMtZqE-EXxSlDppI;
 
 // Read input from request
 $input = json_decode(file_get_contents('php://input'), true);
