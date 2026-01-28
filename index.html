@@ -1281,6 +1281,9 @@
             }
         });
 
+        // IMPORTANT: Update this URL to point to your api-proxy.php file location
+        const API_PROXY_URL = 'https://yourdomain.com/api-proxy.php'; // Change this!
+
         async function callClaude(prompt, loadingId, resultId) {
             const loading = document.getElementById(loadingId);
             const result = document.getElementById(resultId);
@@ -1289,29 +1292,33 @@
             result.innerHTML = '';
 
             try {
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                const response = await fetch(API_PROXY_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 4000,
-                        messages: [{ role: 'user', content: prompt }]
+                        prompt: prompt
                     })
                 });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
 
                 const data = await response.json();
                 loading.classList.remove('active');
 
                 if (data.content && data.content[0]) {
                     return data.content[0].text;
+                } else if (data.error) {
+                    throw new Error(data.error);
                 } else {
                     throw new Error('Invalid response format');
                 }
             } catch (error) {
                 loading.classList.remove('active');
-                result.innerHTML = `<div class="error-box"><strong>Error:</strong> ${error.message}</div>`;
+                result.innerHTML = `<div class="error-box"><strong>Error:</strong> ${error.message}. Please ensure the API proxy is configured correctly.</div>`;
                 throw error;
             }
         }
