@@ -70,7 +70,7 @@ $data = [
 ];
 
 // Gemini API endpoint with model and API key
-$api_url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=' . $api_key;
+$api_url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-exp:generateContent?key=' . $api_key;
 
 // Initialize cURL
 $ch = curl_init($api_url);
