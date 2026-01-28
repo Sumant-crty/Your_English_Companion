@@ -1281,8 +1281,8 @@
             }
         });
 
-        // IMPORTANT: Update this URL to point to your api-proxy.php file location
-        const API_PROXY_URL = 'https://yourdomain.com/api-proxy.php'; // Change this!
+        // IMPORTANT: Update this URL to point to your gemini-proxy.php file location
+        const API_PROXY_URL = 'https://yourdomain.com/gemini-proxy.php'; // Change this to your actual URL!
 
         async function callClaude(prompt, loadingId, resultId) {
             const loading = document.getElementById(loadingId);
@@ -1303,13 +1303,14 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `API Error: ${response.status}`);
                 }
 
                 const data = await response.json();
                 loading.classList.remove('active');
 
-                if (data.content && data.content[0]) {
+                if (data.content && data.content[0] && data.content[0].text) {
                     return data.content[0].text;
                 } else if (data.error) {
                     throw new Error(data.error);
@@ -1318,7 +1319,7 @@
                 }
             } catch (error) {
                 loading.classList.remove('active');
-                result.innerHTML = `<div class="error-box"><strong>Error:</strong> ${error.message}. Please ensure the API proxy is configured correctly.</div>`;
+                result.innerHTML = `<div class="error-box"><strong>Error:</strong> ${error.message}. Please ensure the Gemini API proxy is configured correctly with a valid API key.</div>`;
                 throw error;
             }
         }
