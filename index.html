@@ -1,1 +1,1836 @@
-<iframe src="https://claude.site/public/artifacts/dd127f03-b319-41d6-af53-21570012b11e/embed" title="Claude Artifact" width="100%" height="600" frameborder="0" allow="clipboard-write" allowfullscreen></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your English Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #c7956d;
+            --accent: #e63946;
+            --light: #f8f9fa;
+            --cream: #faf8f3;
+            --ink: #2d3142;
+            --emerald: #16697a;
+            --success: #06d6a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--cream);
+            color: var(--ink);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: 1000;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--emerald) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--secondary);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(199, 149, 109, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-50px, -50px) rotate(180deg); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            color: var(--secondary);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            animation: fadeIn 1s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .nav-card {
+            background: white;
+            border: 2px solid var(--primary);
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(199, 149, 109, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-card:hover::before {
+            left: 100%;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--secondary);
+        }
+
+        .nav-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .nav-card:hover .nav-card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .nav-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .nav-card p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .main-section {
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .main-section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .back-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .back-btn:hover {
+            background: var(--emerald);
+            transform: translateX(-5px);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        input[type="text"], 
+        input[type="number"],
+        textarea, 
+        select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        input:focus, 
+        textarea:focus, 
+        select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(199, 149, 109, 0.1);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.8;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--emerald));
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .result-box {
+            background: white;
+            border-left: 4px solid var(--secondary);
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .result-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .result-content {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: var(--ink);
+        }
+
+        .result-content p {
+            margin-bottom: 1rem;
+        }
+
+        .result-content ul, .result-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--primary);
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .vocab-card {
+            background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
+            border: 2px solid var(--primary);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+
+        .vocab-word {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .vocab-pronunciation {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .vocab-definition {
+            background: var(--cream);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .vocab-example {
+            background: #e8f4f8;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 3px solid var(--emerald);
+            font-style: italic;
+        }
+
+        .grammar-explanation {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--emerald);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .conversation-bubble {
+            background: linear-gradient(135deg, var(--primary), var(--emerald));
+            color: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0 20px 20px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .idiom-card {
+            background: white;
+            border: 2px dashed var(--secondary);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .idiom-card:hover {
+            background: var(--cream);
+            transform: translateX(10px);
+        }
+
+        .idiom-phrase {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--secondary), var(--success));
+            height: 100%;
+            transition: width 1s ease-out;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: var(--cream);
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .difficulty-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .difficulty-btn.active {
+            border-color: var(--secondary);
+            background: var(--secondary);
+            color: white;
+        }
+
+        .example-box {
+            background: #f0f7f4;
+            border-left: 4px solid var(--success);
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .tip-box {
+            background: #fff9e6;
+            border-left: 4px solid #ffd93d;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .error-box {
+            background: #ffe0e0;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .difficulty-selector {
+                flex-direction: column;
+            }
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(199, 149, 109, 0.1), rgba(22, 105, 122, 0.1));
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 5px solid var(--secondary);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .feature-highlight h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary), var(--emerald));
+            color: white;
+            padding: 0.4rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    
+    <header>
+        <h1>Your English Companion</h1>
+        <p class="subtitle">Master English with AI-Powered Excellence</p>
+    </header>
+
+    <div class="container">
+        <!-- Home Navigation -->
+        <div id="home" class="main-section active">
+            <div class="nav-grid">
+                <div class="nav-card" onclick="showSection('vocabulary')">
+                    <div class="nav-card-icon">📚</div>
+                    <h3>Vocabulary Building</h3>
+                    <p>Expand your word power with contextual learning, etymology, and practical usage examples</p>
+                </div>
+
+                <div class="nav-card" onclick="showSection('grammar')">
+                    <div class="nav-card-icon">✏️</div>
+                    <h3>Grammar Section</h3>
+                    <p>Master English grammar with clear explanations, examples, and interactive practice</p>
+                </div>
+
+                <div class="nav-card" onclick="showSection('conversation')">
+                    <div class="nav-card-icon">💬</div>
+                    <h3>Conversation Topics</h3>
+                    <p>Practice real-world conversations on diverse topics with AI-generated dialogues</p>
+                </div>
+
+                <div class="nav-card" onclick="showSection('essay')">
+                    <div class="nav-card-icon">📝</div>
+                    <h3>Essay Writing</h3>
+                    <p>Craft compelling essays with structure guidance, feedback, and improvement tips</p>
+                </div>
+
+                <div class="nav-card" onclick="showSection('article')">
+                    <div class="nav-card-icon">📰</div>
+                    <h3>Article Writing</h3>
+                    <p>Learn journalistic and creative article writing with professional techniques</p>
+                </div>
+
+                <div class="nav-card" onclick="showSection('letter')">
+                    <div class="nav-card-icon">✉️</div>
+                    <h3>Letter Writing</h3>
+                    <p>Master formal and informal letter writing for all occasions and purposes</p>
+                </div>
+
+                <div class="nav-card" onclick="showSection('idioms')">
+                    <div class="nav-card-icon">🎭</div>
+                    <h3>Idioms & Phrases</h3>
+                    <p>Discover colorful expressions and phrases that make your English come alive</p>
+                </div>
+
+                <div class="nav-card" onclick="showSection('practice')">
+                    <div class="nav-card-icon">🎯</div>
+                    <h3>Practice & Assessment</h3>
+                    <p>Test your skills with AI-generated exercises and get personalized feedback</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vocabulary Building Section -->
+        <div id="vocabulary" class="main-section">
+            <div class="section-header">
+                <h2>📚 Vocabulary Building</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI-Powered Learning</div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchVocabTab('learn')">Learn New Words</div>
+                <div class="tab" onclick="switchVocabTab('context')">Word in Context</div>
+                <div class="tab" onclick="switchVocabTab('synonyms')">Synonyms & Antonyms</div>
+                <div class="tab" onclick="switchVocabTab('etymology')">Word Origins</div>
+            </div>
+
+            <div id="vocab-learn" class="tab-content">
+                <div class="input-group">
+                    <label>Select Difficulty Level:</label>
+                    <div class="difficulty-selector">
+                        <button class="difficulty-btn active" onclick="selectDifficulty(this, 'beginner')">Beginner</button>
+                        <button class="difficulty-btn" onclick="selectDifficulty(this, 'intermediate')">Intermediate</button>
+                        <button class="difficulty-btn" onclick="selectDifficulty(this, 'advanced')">Advanced</button>
+                        <button class="difficulty-btn" onclick="selectDifficulty(this, 'proficiency')">Proficiency</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Number of Words to Learn:</label>
+                    <input type="number" id="vocabCount" min="1" max="20" value="5">
+                </div>
+
+                <div class="input-group">
+                    <label>Topic/Category (optional):</label>
+                    <input type="text" id="vocabTopic" placeholder="e.g., business, science, daily life">
+                </div>
+
+                <button class="btn-primary" onclick="generateVocabulary()">Generate Vocabulary</button>
+
+                <div class="loading" id="vocabLoading">
+                    <div class="spinner"></div>
+                    <p>Generating personalized vocabulary...</p>
+                </div>
+
+                <div id="vocabResult"></div>
+            </div>
+
+            <div id="vocab-context" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Enter a word to see it used in different contexts:</label>
+                    <input type="text" id="contextWord" placeholder="e.g., resilient">
+                </div>
+                <button class="btn-primary" onclick="generateWordContext()">Show Contexts</button>
+                <div class="loading" id="contextLoading">
+                    <div class="spinner"></div>
+                    <p>Generating contextual examples...</p>
+                </div>
+                <div id="contextResult"></div>
+            </div>
+
+            <div id="vocab-synonyms" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Enter a word to find synonyms and antonyms:</label>
+                    <input type="text" id="synonymWord" placeholder="e.g., happy">
+                </div>
+                <button class="btn-primary" onclick="generateSynonyms()">Find Synonyms & Antonyms</button>
+                <div class="loading" id="synonymLoading">
+                    <div class="spinner"></div>
+                    <p>Finding word relationships...</p>
+                </div>
+                <div id="synonymResult"></div>
+            </div>
+
+            <div id="vocab-etymology" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Enter a word to learn its origin and history:</label>
+                    <input type="text" id="etymologyWord" placeholder="e.g., philosophy">
+                </div>
+                <button class="btn-primary" onclick="generateEtymology()">Explore Etymology</button>
+                <div class="loading" id="etymologyLoading">
+                    <div class="spinner"></div>
+                    <p>Tracing word origins...</p>
+                </div>
+                <div id="etymologyResult"></div>
+            </div>
+        </div>
+
+        <!-- Grammar Section -->
+        <div id="grammar" class="main-section">
+            <div class="section-header">
+                <h2>✏️ Grammar Section</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI Grammar Coach</div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchGrammarTab('learn')">Learn Grammar</div>
+                <div class="tab" onclick="switchGrammarTab('check')">Grammar Check</div>
+                <div class="tab" onclick="switchGrammarTab('explain')">Explain Grammar</div>
+            </div>
+
+            <div id="grammar-learn" class="tab-content">
+                <div class="input-group">
+                    <label>Select Grammar Topic:</label>
+                    <select id="grammarTopic">
+                        <option value="">Choose a topic...</option>
+                        <option value="tenses">Tenses</option>
+                        <option value="parts-of-speech">Parts of Speech</option>
+                        <option value="sentence-structure">Sentence Structure</option>
+                        <option value="punctuation">Punctuation</option>
+                        <option value="clauses">Clauses and Phrases</option>
+                        <option value="voice">Active and Passive Voice</option>
+                        <option value="modals">Modal Verbs</option>
+                        <option value="conditionals">Conditionals</option>
+                        <option value="reported-speech">Reported Speech</option>
+                        <option value="articles">Articles (a, an, the)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Specific Question or Area (optional):</label>
+                    <input type="text" id="grammarQuestion" placeholder="e.g., When do I use present perfect?">
+                </div>
+
+                <button class="btn-primary" onclick="learnGrammar()">Learn Grammar</button>
+
+                <div class="loading" id="grammarLearnLoading">
+                    <div class="spinner"></div>
+                    <p>Preparing grammar lesson...</p>
+                </div>
+
+                <div id="grammarLearnResult"></div>
+            </div>
+
+            <div id="grammar-check" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Enter text to check for grammar errors:</label>
+                    <textarea id="grammarCheckText" placeholder="Paste your text here..."></textarea>
+                </div>
+                <button class="btn-primary" onclick="checkGrammar()">Check Grammar</button>
+                <div class="loading" id="grammarCheckLoading">
+                    <div class="spinner"></div>
+                    <p>Analyzing grammar...</p>
+                </div>
+                <div id="grammarCheckResult"></div>
+            </div>
+
+            <div id="grammar-explain" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Enter a sentence to understand its grammar:</label>
+                    <textarea id="grammarExplainText" placeholder="e.g., I have been working here for five years."></textarea>
+                </div>
+                <button class="btn-primary" onclick="explainGrammar()">Explain Grammar</button>
+                <div class="loading" id="grammarExplainLoading">
+                    <div class="spinner"></div>
+                    <p>Analyzing sentence structure...</p>
+                </div>
+                <div id="grammarExplainResult"></div>
+            </div>
+        </div>
+
+        <!-- Conversation Topics Section -->
+        <div id="conversation" class="main-section">
+            <div class="section-header">
+                <h2>💬 Conversation Practice</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI Conversation Partner</div>
+
+            <div class="input-group">
+                <label>Select Conversation Topic:</label>
+                <select id="conversationTopic">
+                    <option value="">Choose a topic...</option>
+                    <option value="introductions">Introductions & Meeting People</option>
+                    <option value="daily-life">Daily Life & Routines</option>
+                    <option value="work">Work & Career</option>
+                    <option value="travel">Travel & Tourism</option>
+                    <option value="food">Food & Dining</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="health">Health & Fitness</option>
+                    <option value="technology">Technology</option>
+                    <option value="environment">Environment & Climate</option>
+                    <option value="culture">Culture & Arts</option>
+                    <option value="education">Education</option>
+                    <option value="business">Business & Negotiations</option>
+                    <option value="custom">Custom Topic</option>
+                </select>
+            </div>
+
+            <div class="input-group" id="customTopicGroup" style="display:none;">
+                <label>Enter Your Custom Topic:</label>
+                <input type="text" id="customConversationTopic" placeholder="e.g., discussing a movie">
+            </div>
+
+            <div class="input-group">
+                <label>Conversation Style:</label>
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn active" onclick="selectConversationStyle(this, 'casual')">Casual</button>
+                    <button class="difficulty-btn" onclick="selectConversationStyle(this, 'formal')">Formal</button>
+                    <button class="difficulty-btn" onclick="selectConversationStyle(this, 'business')">Business</button>
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="generateConversation()">Generate Conversation</button>
+
+            <div class="loading" id="conversationLoading">
+                <div class="spinner"></div>
+                <p>Creating conversation scenario...</p>
+            </div>
+
+            <div id="conversationResult"></div>
+        </div>
+
+        <!-- Essay Writing Section -->
+        <div id="essay" class="main-section">
+            <div class="section-header">
+                <h2>📝 Essay Writing</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI Writing Coach</div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchEssayTab('write')">Write Essay</div>
+                <div class="tab" onclick="switchEssayTab('improve')">Improve Essay</div>
+                <div class="tab" onclick="switchEssayTab('outline')">Generate Outline</div>
+            </div>
+
+            <div id="essay-write" class="tab-content">
+                <div class="input-group">
+                    <label>Essay Topic:</label>
+                    <input type="text" id="essayTopic" placeholder="e.g., The Impact of Social Media on Society">
+                </div>
+
+                <div class="input-group">
+                    <label>Essay Type:</label>
+                    <select id="essayType">
+                        <option value="argumentative">Argumentative</option>
+                        <option value="persuasive">Persuasive</option>
+                        <option value="descriptive">Descriptive</option>
+                        <option value="narrative">Narrative</option>
+                        <option value="expository">Expository</option>
+                        <option value="compare-contrast">Compare and Contrast</option>
+                        <option value="cause-effect">Cause and Effect</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Word Count:</label>
+                    <input type="number" id="essayWordCount" min="100" max="2000" value="500">
+                </div>
+
+                <div class="input-group">
+                    <label>Additional Instructions (optional):</label>
+                    <textarea id="essayInstructions" placeholder="Any specific requirements or points to include..."></textarea>
+                </div>
+
+                <button class="btn-primary" onclick="generateEssay()">Generate Essay</button>
+
+                <div class="loading" id="essayLoading">
+                    <div class="spinner"></div>
+                    <p>Crafting your essay...</p>
+                </div>
+
+                <div id="essayResult"></div>
+            </div>
+
+            <div id="essay-improve" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Paste your essay for improvement suggestions:</label>
+                    <textarea id="essayImproveText" rows="15" placeholder="Paste your essay here..."></textarea>
+                </div>
+
+                <button class="btn-primary" onclick="improveEssay()">Get Improvement Suggestions</button>
+
+                <div class="loading" id="essayImproveLoading">
+                    <div class="spinner"></div>
+                    <p>Analyzing your essay...</p>
+                </div>
+
+                <div id="essayImproveResult"></div>
+            </div>
+
+            <div id="essay-outline" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Essay Topic:</label>
+                    <input type="text" id="outlineTopic" placeholder="e.g., Climate Change Solutions">
+                </div>
+
+                <div class="input-group">
+                    <label>Essay Type:</label>
+                    <select id="outlineType">
+                        <option value="argumentative">Argumentative</option>
+                        <option value="persuasive">Persuasive</option>
+                        <option value="descriptive">Descriptive</option>
+                        <option value="narrative">Narrative</option>
+                        <option value="expository">Expository</option>
+                    </select>
+                </div>
+
+                <button class="btn-primary" onclick="generateOutline()">Generate Outline</button>
+
+                <div class="loading" id="outlineLoading">
+                    <div class="spinner"></div>
+                    <p>Creating essay outline...</p>
+                </div>
+
+                <div id="outlineResult"></div>
+            </div>
+        </div>
+
+        <!-- Article Writing Section -->
+        <div id="article" class="main-section">
+            <div class="section-header">
+                <h2>📰 Article Writing</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI Journalism Assistant</div>
+
+            <div class="input-group">
+                <label>Article Topic:</label>
+                <input type="text" id="articleTopic" placeholder="e.g., Emerging Trends in Renewable Energy">
+            </div>
+
+            <div class="input-group">
+                <label>Article Style:</label>
+                <select id="articleStyle">
+                    <option value="news">News Article</option>
+                    <option value="feature">Feature Article</option>
+                    <option value="opinion">Opinion/Editorial</option>
+                    <option value="how-to">How-To Guide</option>
+                    <option value="listicle">Listicle</option>
+                    <option value="interview">Interview Format</option>
+                    <option value="review">Review</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Target Audience:</label>
+                <input type="text" id="articleAudience" placeholder="e.g., general public, professionals, students">
+            </div>
+
+            <div class="input-group">
+                <label>Word Count:</label>
+                <input type="number" id="articleWordCount" min="200" max="2000" value="600">
+            </div>
+
+            <div class="input-group">
+                <label>Key Points to Cover (optional):</label>
+                <textarea id="articlePoints" placeholder="Enter key points, one per line..."></textarea>
+            </div>
+
+            <button class="btn-primary" onclick="generateArticle()">Generate Article</button>
+
+            <div class="loading" id="articleLoading">
+                <div class="spinner"></div>
+                <p>Writing your article...</p>
+            </div>
+
+            <div id="articleResult"></div>
+        </div>
+
+        <!-- Letter Writing Section -->
+        <div id="letter" class="main-section">
+            <div class="section-header">
+                <h2>✉️ Letter Writing</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI Letter Assistant</div>
+
+            <div class="input-group">
+                <label>Letter Type:</label>
+                <select id="letterType">
+                    <option value="">Choose letter type...</option>
+                    <option value="formal-business">Formal Business Letter</option>
+                    <option value="cover-letter">Cover Letter/Job Application</option>
+                    <option value="resignation">Resignation Letter</option>
+                    <option value="complaint">Complaint Letter</option>
+                    <option value="recommendation">Recommendation Letter</option>
+                    <option value="inquiry">Inquiry Letter</option>
+                    <option value="apology">Apology Letter</option>
+                    <option value="thank-you">Thank You Letter</option>
+                    <option value="invitation">Invitation Letter</option>
+                    <option value="friendly">Friendly/Personal Letter</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Purpose/Context:</label>
+                <textarea id="letterContext" placeholder="Describe the situation and purpose of the letter..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Recipient (optional):</label>
+                <input type="text" id="letterRecipient" placeholder="e.g., Hiring Manager, Mr. Smith">
+            </div>
+
+            <div class="input-group">
+                <label>Your Name (optional):</label>
+                <input type="text" id="letterSender" placeholder="Your name">
+            </div>
+
+            <button class="btn-primary" onclick="generateLetter()">Generate Letter</button>
+
+            <div class="loading" id="letterLoading">
+                <div class="spinner"></div>
+                <p>Composing your letter...</p>
+            </div>
+
+            <div id="letterResult"></div>
+        </div>
+
+        <!-- Idioms & Phrases Section -->
+        <div id="idioms" class="main-section">
+            <div class="section-header">
+                <h2>🎭 Idioms & Phrases</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI Language Explorer</div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchIdiomsTab('learn')">Learn Idioms</div>
+                <div class="tab" onclick="switchIdiomsTab('search')">Search Idioms</div>
+                <div class="tab" onclick="switchIdiomsTab('practice')">Practice Usage</div>
+            </div>
+
+            <div id="idioms-learn" class="tab-content">
+                <div class="input-group">
+                    <label>Select Category:</label>
+                    <select id="idiomsCategory">
+                        <option value="general">General/Common</option>
+                        <option value="business">Business & Work</option>
+                        <option value="emotions">Emotions & Feelings</option>
+                        <option value="time">Time</option>
+                        <option value="money">Money</option>
+                        <option value="nature">Nature & Weather</option>
+                        <option value="body">Body Parts</option>
+                        <option value="animals">Animals</option>
+                        <option value="food">Food</option>
+                        <option value="colors">Colors</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Number of Idioms:</label>
+                    <input type="number" id="idiomsCount" min="1" max="15" value="5">
+                </div>
+
+                <button class="btn-primary" onclick="generateIdioms()">Learn Idioms</button>
+
+                <div class="loading" id="idiomsLoading">
+                    <div class="spinner"></div>
+                    <p>Gathering colorful expressions...</p>
+                </div>
+
+                <div id="idiomsResult"></div>
+            </div>
+
+            <div id="idioms-search" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Enter an idiom or keyword to search:</label>
+                    <input type="text" id="idiomSearch" placeholder="e.g., break the ice, rain">
+                </div>
+
+                <button class="btn-primary" onclick="searchIdiom()">Search</button>
+
+                <div class="loading" id="idiomSearchLoading">
+                    <div class="spinner"></div>
+                    <p>Searching idioms...</p>
+                </div>
+
+                <div id="idiomSearchResult"></div>
+            </div>
+
+            <div id="idioms-practice" class="tab-content" style="display:none;">
+                <div class="input-group">
+                    <label>Enter a situation or context:</label>
+                    <textarea id="idiomContext" placeholder="e.g., I want to encourage my friend who is nervous about a job interview"></textarea>
+                </div>
+
+                <button class="btn-primary" onclick="practiceIdioms()">Suggest Idioms</button>
+
+                <div class="loading" id="idiomPracticeLoading">
+                    <div class="spinner"></div>
+                    <p>Finding perfect expressions...</p>
+                </div>
+
+                <div id="idiomPracticeResult"></div>
+            </div>
+        </div>
+
+        <!-- Practice & Assessment Section -->
+        <div id="practice" class="main-section">
+            <div class="section-header">
+                <h2>🎯 Practice & Assessment</h2>
+                <button class="back-btn" onclick="showSection('home')">← Back to Home</button>
+            </div>
+
+            <div class="ai-badge">✨ AI Practice Generator</div>
+
+            <div class="input-group">
+                <label>Practice Type:</label>
+                <select id="practiceType">
+                    <option value="vocabulary-quiz">Vocabulary Quiz</option>
+                    <option value="grammar-exercise">Grammar Exercise</option>
+                    <option value="sentence-correction">Sentence Correction</option>
+                    <option value="fill-blanks">Fill in the Blanks</option>
+                    <option value="writing-prompt">Writing Prompt</option>
+                    <option value="comprehension">Reading Comprehension</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Difficulty Level:</label>
+                <div class="difficulty-selector">
+                    <button class="difficulty-btn active" onclick="selectPracticeDifficulty(this, 'beginner')">Beginner</button>
+                    <button class="difficulty-btn" onclick="selectPracticeDifficulty(this, 'intermediate')">Intermediate</button>
+                    <button class="difficulty-btn" onclick="selectPracticeDifficulty(this, 'advanced')">Advanced</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Number of Questions:</label>
+                <input type="number" id="practiceQuestions" min="5" max="20" value="10">
+            </div>
+
+            <button class="btn-primary" onclick="generatePractice()">Generate Practice</button>
+
+            <div class="loading" id="practiceLoading">
+                <div class="spinner"></div>
+                <p>Creating practice exercises...</p>
+            </div>
+
+            <div id="practiceResult"></div>
+        </div>
+    </div>
+
+    <footer style="background: var(--primary); color: var(--light); text-align: center; padding: 2rem; margin-top: 4rem; border-top: 4px solid var(--secondary);">
+        <p style="font-family: 'DM Sans', sans-serif; font-size: 0.95rem; letter-spacing: 0.05em;">
+            © 2026 Sujoy. All Rights Reserved.
+        </p>
+    </footer>
+
+    <script>
+        let currentDifficulty = 'beginner';
+        let currentConversationStyle = 'casual';
+        let currentPracticeDifficulty = 'beginner';
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.main-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectDifficulty(btn, difficulty) {
+            document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentDifficulty = difficulty;
+        }
+
+        function selectConversationStyle(btn, style) {
+            document.querySelectorAll('#conversation .difficulty-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentConversationStyle = style;
+        }
+
+        function selectPracticeDifficulty(btn, difficulty) {
+            document.querySelectorAll('#practice .difficulty-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentPracticeDifficulty = difficulty;
+        }
+
+        function switchVocabTab(tab) {
+            document.querySelectorAll('#vocabulary .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('#vocabulary .tab-content').forEach(c => c.style.display = 'none');
+            document.getElementById(`vocab-${tab}`).style.display = 'block';
+        }
+
+        function switchGrammarTab(tab) {
+            document.querySelectorAll('#grammar .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('#grammar .tab-content').forEach(c => c.style.display = 'none');
+            document.getElementById(`grammar-${tab}`).style.display = 'block';
+        }
+
+        function switchEssayTab(tab) {
+            document.querySelectorAll('#essay .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('#essay .tab-content').forEach(c => c.style.display = 'none');
+            document.getElementById(`essay-${tab}`).style.display = 'block';
+        }
+
+        function switchIdiomsTab(tab) {
+            document.querySelectorAll('#idioms .tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('#idioms .tab-content').forEach(c => c.style.display = 'none');
+            document.getElementById(`idioms-${tab}`).style.display = 'block';
+        }
+
+        // Show/hide custom topic field
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicSelect = document.getElementById('conversationTopic');
+            if (topicSelect) {
+                topicSelect.addEventListener('change', function() {
+                    const customGroup = document.getElementById('customTopicGroup');
+                    if (this.value === 'custom') {
+                        customGroup.style.display = 'block';
+                    } else {
+                        customGroup.style.display = 'none';
+                    }
+                });
+            }
+        });
+
+        async function callClaude(prompt, loadingId, resultId) {
+            const loading = document.getElementById(loadingId);
+            const result = document.getElementById(resultId);
+            
+            loading.classList.add('active');
+            result.innerHTML = '';
+
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 4000,
+                        messages: [{ role: 'user', content: prompt }]
+                    })
+                });
+
+                const data = await response.json();
+                loading.classList.remove('active');
+
+                if (data.content && data.content[0]) {
+                    return data.content[0].text;
+                } else {
+                    throw new Error('Invalid response format');
+                }
+            } catch (error) {
+                loading.classList.remove('active');
+                result.innerHTML = `<div class="error-box"><strong>Error:</strong> ${error.message}</div>`;
+                throw error;
+            }
+        }
+
+        async function generateVocabulary() {
+            const count = document.getElementById('vocabCount').value;
+            const topic = document.getElementById('vocabTopic').value;
+            
+            const prompt = `As an expert English tutor, provide ${count} ${currentDifficulty}-level vocabulary words${topic ? ` related to ${topic}` : ''}. 
+
+For each word, provide:
+1. The word and pronunciation
+2. Part of speech
+3. Clear definition
+4. Etymology (word origin)
+5. Two example sentences showing different contexts
+6. Synonyms and antonyms
+7. A memory tip or mnemonic
+
+Format each word as a clear, educational card. Make it engaging and helpful for language learners.`;
+
+            try {
+                const response = await callClaude(prompt, 'vocabLoading', 'vocabResult');
+                document.getElementById('vocabResult').innerHTML = `<div class="result-box"><h3>Your Vocabulary Lesson</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateWordContext() {
+            const word = document.getElementById('contextWord').value.trim();
+            if (!word) {
+                alert('Please enter a word');
+                return;
+            }
+
+            const prompt = `As an expert English tutor, show the word "${word}" used in 6 different contexts:
+
+1. Formal/Academic context
+2. Casual/Everyday context
+3. Business context
+4. Creative/Literary context
+5. Technical context
+6. Colloquial/Idiomatic usage
+
+For each context, provide:
+- A natural sentence using the word
+- Brief explanation of why it works in this context
+- Any nuances in meaning
+
+Help learners understand how the word's usage shifts across different situations.`;
+
+            try {
+                const response = await callClaude(prompt, 'contextLoading', 'contextResult');
+                document.getElementById('contextResult').innerHTML = `<div class="result-box"><h3>Contextual Usage of "${word}"</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateSynonyms() {
+            const word = document.getElementById('synonymWord').value.trim();
+            if (!word) {
+                alert('Please enter a word');
+                return;
+            }
+
+            const prompt = `As an expert English tutor, provide a comprehensive analysis of "${word}":
+
+1. List 8-10 synonyms with subtle differences in meaning/connotation
+2. List 5-6 antonyms
+3. Explain when to use each synonym (formality, intensity, context)
+4. Provide example sentences showing synonyms in action
+5. Note any synonyms that are NOT interchangeable and why
+
+Make this a rich learning experience about word choice and nuance.`;
+
+            try {
+                const response = await callClaude(prompt, 'synonymLoading', 'synonymResult');
+                document.getElementById('synonymResult').innerHTML = `<div class="result-box"><h3>Word Relationships: "${word}"</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateEtymology() {
+            const word = document.getElementById('etymologyWord').value.trim();
+            if (!word) {
+                alert('Please enter a word');
+                return;
+            }
+
+            const prompt = `As an expert etymologist and English tutor, provide a fascinating exploration of the word "${word}":
+
+1. Original language and meaning
+2. Historical journey through different languages
+3. How the meaning evolved over time
+4. Related words from the same root
+5. Interesting historical facts or stories about the word
+6. Modern usage and any changes in meaning
+
+Make etymology come alive! Help learners see how understanding word origins deepens their vocabulary knowledge.`;
+
+            try {
+                const response = await callClaude(prompt, 'etymologyLoading', 'etymologyResult');
+                document.getElementById('etymologyResult').innerHTML = `<div class="result-box"><h3>Etymology of "${word}"</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function learnGrammar() {
+            const topic = document.getElementById('grammarTopic').value;
+            const question = document.getElementById('grammarQuestion').value;
+            
+            if (!topic) {
+                alert('Please select a grammar topic');
+                return;
+            }
+
+            const prompt = `As an expert English grammar tutor, provide a comprehensive lesson on: ${topic}${question ? `. Specifically address: ${question}` : ''}
+
+Include:
+1. Clear explanation of the grammar rule/concept
+2. When and why to use it
+3. Common mistakes to avoid
+4. 5-7 example sentences (correct and incorrect)
+5. Practice exercises (3-5 questions)
+6. Pro tips for mastery
+
+Make it clear, engaging, and practical for learners.`;
+
+            try {
+                const response = await callClaude(prompt, 'grammarLearnLoading', 'grammarLearnResult');
+                document.getElementById('grammarLearnResult').innerHTML = `<div class="result-box"><h3>Grammar Lesson</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function checkGrammar() {
+            const text = document.getElementById('grammarCheckText').value.trim();
+            if (!text) {
+                alert('Please enter text to check');
+                return;
+            }
+
+            const prompt = `As an expert English grammar checker, analyze this text for errors:
+
+"${text}"
+
+Provide:
+1. List of grammar errors with explanations
+2. Corrected version of the text
+3. Suggestions for improvement (style, clarity, word choice)
+4. Highlight any areas of excellence
+
+Be thorough but encouraging. Help the writer improve.`;
+
+            try {
+                const response = await callClaude(prompt, 'grammarCheckLoading', 'grammarCheckResult');
+                document.getElementById('grammarCheckResult').innerHTML = `<div class="result-box"><h3>Grammar Analysis</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function explainGrammar() {
+            const text = document.getElementById('grammarExplainText').value.trim();
+            if (!text) {
+                alert('Please enter a sentence');
+                return;
+            }
+
+            const prompt = `As an expert English grammar tutor, analyze this sentence in detail:
+
+"${text}"
+
+Provide:
+1. Sentence structure breakdown (subject, verb, object, etc.)
+2. Identify all parts of speech
+3. Explain any clauses (independent, dependent)
+4. Grammar rules at work in this sentence
+5. Why it's correct (or how to fix it if incorrect)
+6. Similar sentence patterns for practice
+
+Make grammar analysis clear and educational.`;
+
+            try {
+                const response = await callClaude(prompt, 'grammarExplainLoading', 'grammarExplainResult');
+                document.getElementById('grammarExplainResult').innerHTML = `<div class="result-box"><h3>Grammar Analysis</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateConversation() {
+            const topicSelect = document.getElementById('conversationTopic').value;
+            const customTopic = document.getElementById('customConversationTopic').value;
+            const topic = topicSelect === 'custom' ? customTopic : topicSelect;
+            
+            if (!topic) {
+                alert('Please select or enter a conversation topic');
+                return;
+            }
+
+            const prompt = `As an expert English conversation tutor, create a realistic ${currentConversationStyle} conversation about: ${topic}
+
+Provide:
+1. A dialogue between 2-3 people (8-12 exchanges)
+2. Natural, authentic language for the situation
+3. Key phrases and expressions highlighted
+4. Cultural notes if relevant
+5. Vocabulary breakdown of important words/phrases
+6. Practice prompts for the learner to try
+
+Make it engaging and practical for real-world use!`;
+
+            try {
+                const response = await callClaude(prompt, 'conversationLoading', 'conversationResult');
+                document.getElementById('conversationResult').innerHTML = `<div class="result-box"><h3>Conversation Practice</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateEssay() {
+            const topic = document.getElementById('essayTopic').value.trim();
+            const type = document.getElementById('essayType').value;
+            const wordCount = document.getElementById('essayWordCount').value;
+            const instructions = document.getElementById('essayInstructions').value;
+
+            if (!topic) {
+                alert('Please enter an essay topic');
+                return;
+            }
+
+            const prompt = `As an expert essay writing tutor, write a high-quality ${type} essay on: "${topic}"
+
+Requirements:
+- Word count: approximately ${wordCount} words
+- Essay type: ${type}
+${instructions ? `- Additional instructions: ${instructions}` : ''}
+
+Provide:
+1. A complete, well-structured essay with:
+   - Engaging introduction with thesis
+   - Well-developed body paragraphs
+   - Strong conclusion
+2. After the essay, include:
+   - Analysis of the essay structure
+   - Key writing techniques used
+   - Tips for writing similar essays
+
+Make it educational and exemplary!`;
+
+            try {
+                const response = await callClaude(prompt, 'essayLoading', 'essayResult');
+                document.getElementById('essayResult').innerHTML = `<div class="result-box"><h3>Your Essay</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function improveEssay() {
+            const text = document.getElementById('essayImproveText').value.trim();
+            if (!text) {
+                alert('Please paste your essay');
+                return;
+            }
+
+            const prompt = `As an expert essay writing coach, analyze and provide improvement suggestions for this essay:
+
+"${text}"
+
+Provide:
+1. Overall assessment (strengths and weaknesses)
+2. Specific suggestions for:
+   - Structure and organization
+   - Thesis and arguments
+   - Evidence and examples
+   - Transitions and flow
+   - Language and style
+   - Grammar and mechanics
+3. Revised version of 2-3 key paragraphs showing improvements
+4. Action steps for the writer
+
+Be constructive and specific!`;
+
+            try {
+                const response = await callClaude(prompt, 'essayImproveLoading', 'essayImproveResult');
+                document.getElementById('essayImproveResult').innerHTML = `<div class="result-box"><h3>Essay Improvement Suggestions</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateOutline() {
+            const topic = document.getElementById('outlineTopic').value.trim();
+            const type = document.getElementById('outlineType').value;
+
+            if (!topic) {
+                alert('Please enter an essay topic');
+                return;
+            }
+
+            const prompt = `As an expert essay writing tutor, create a detailed outline for a ${type} essay on: "${topic}"
+
+Provide:
+1. Thesis statement
+2. Introduction structure
+3. Body paragraph outlines (3-5 paragraphs):
+   - Topic sentence
+   - Key points to cover
+   - Evidence/examples needed
+   - Concluding sentence
+4. Conclusion structure
+5. Research suggestions
+6. Writing tips for this essay type
+
+Make it a complete roadmap for writing the essay!`;
+
+            try {
+                const response = await callClaude(prompt, 'outlineLoading', 'outlineResult');
+                document.getElementById('outlineResult').innerHTML = `<div class="result-box"><h3>Essay Outline</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateArticle() {
+            const topic = document.getElementById('articleTopic').value.trim();
+            const style = document.getElementById('articleStyle').value;
+            const audience = document.getElementById('articleAudience').value;
+            const wordCount = document.getElementById('articleWordCount').value;
+            const points = document.getElementById('articlePoints').value;
+
+            if (!topic) {
+                alert('Please enter an article topic');
+                return;
+            }
+
+            const prompt = `As an expert journalist and article writer, create a ${style} article on: "${topic}"
+
+Requirements:
+- Target audience: ${audience || 'general public'}
+- Word count: approximately ${wordCount} words
+- Style: ${style}
+${points ? `- Key points to cover: ${points}` : ''}
+
+Provide:
+1. A complete, publication-ready article with:
+   - Compelling headline
+   - Engaging lead/introduction
+   - Well-structured body
+   - Strong conclusion/call-to-action
+2. After the article, include:
+   - Analysis of article structure
+   - Writing techniques used
+   - Tips for this article style
+
+Make it professional and engaging!`;
+
+            try {
+                const response = await callClaude(prompt, 'articleLoading', 'articleResult');
+                document.getElementById('articleResult').innerHTML = `<div class="result-box"><h3>Your Article</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateLetter() {
+            const type = document.getElementById('letterType').value;
+            const context = document.getElementById('letterContext').value.trim();
+            const recipient = document.getElementById('letterRecipient').value;
+            const sender = document.getElementById('letterSender').value;
+
+            if (!type || !context) {
+                alert('Please select letter type and provide context');
+                return;
+            }
+
+            const prompt = `As an expert letter writing tutor, create a ${type} with the following details:
+
+Context: ${context}
+${recipient ? `Recipient: ${recipient}` : ''}
+${sender ? `Sender: ${sender}` : ''}
+
+Provide:
+1. A complete, properly formatted letter including:
+   - Appropriate greeting
+   - Well-structured body
+   - Professional/appropriate closing
+2. After the letter, include:
+   - Key elements explanation
+   - Tone and style notes
+   - Alternatives for different situations
+   - Tips for this letter type
+
+Make it professional and appropriate for the situation!`;
+
+            try {
+                const response = await callClaude(prompt, 'letterLoading', 'letterResult');
+                document.getElementById('letterResult').innerHTML = `<div class="result-box"><h3>Your Letter</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generateIdioms() {
+            const category = document.getElementById('idiomsCategory').value;
+            const count = document.getElementById('idiomsCount').value;
+
+            const prompt = `As an expert English language tutor, teach ${count} common idioms and phrases from the ${category} category.
+
+For each idiom, provide:
+1. The idiom/phrase
+2. Literal vs. figurative meaning
+3. Origin/etymology (if interesting)
+4. Two example sentences in context
+5. Situations where you'd use it
+6. Similar expressions
+7. Cultural notes if relevant
+
+Make idioms memorable and fun to learn!`;
+
+            try {
+                const response = await callClaude(prompt, 'idiomsLoading', 'idiomsResult');
+                document.getElementById('idiomsResult').innerHTML = `<div class="result-box"><h3>Idioms & Phrases</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function searchIdiom() {
+            const search = document.getElementById('idiomSearch').value.trim();
+            if (!search) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            const prompt = `As an expert English language tutor, find and explain idioms related to: "${search}"
+
+Provide:
+1. 5-8 relevant idioms/phrases
+2. For each one:
+   - The complete idiom
+   - Meaning and usage
+   - Example sentences
+   - Variations if any
+3. How they're related to the search term
+4. Tips for remembering them
+
+Help learners discover the richness of idiomatic English!`;
+
+            try {
+                const response = await callClaude(prompt, 'idiomSearchLoading', 'idiomSearchResult');
+                document.getElementById('idiomSearchResult').innerHTML = `<div class="result-box"><h3>Search Results</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function practiceIdioms() {
+            const context = document.getElementById('idiomContext').value.trim();
+            if (!context) {
+                alert('Please enter a situation');
+                return;
+            }
+
+            const prompt = `As an expert English language tutor, suggest appropriate idioms and phrases for this situation:
+
+"${context}"
+
+Provide:
+1. 4-6 perfect idioms/phrases for this context
+2. For each one:
+   - How to use it naturally in this situation
+   - Example dialogue/sentence
+   - Tone and formality level
+3. Practice scenarios using these idioms
+4. Alternative expressions
+
+Help learners use idioms confidently in real situations!`;
+
+            try {
+                const response = await callClaude(prompt, 'idiomPracticeLoading', 'idiomPracticeResult');
+                document.getElementById('idiomPracticeResult').innerHTML = `<div class="result-box"><h3>Suggested Idioms</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function generatePractice() {
+            const type = document.getElementById('practiceType').value;
+            const questions = document.getElementById('practiceQuestions').value;
+
+            const prompt = `As an expert English tutor, create a ${type} practice exercise at ${currentPracticeDifficulty} level.
+
+Requirements:
+- ${questions} questions
+- Practice type: ${type}
+
+Provide:
+1. Clear instructions
+2. All questions/exercises
+3. Answer key with explanations
+4. Scoring guide
+5. Learning tips based on common mistakes
+
+Make it challenging but fair, educational and engaging!`;
+
+            try {
+                const response = await callClaude(prompt, 'practiceLoading', 'practiceResult');
+                document.getElementById('practiceResult').innerHTML = `<div class="result-box"><h3>Practice Exercise</h3><div class="result-content">${response.replace(/\n/g, '<br>')}</div></div>`;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
